@@ -7,4 +7,7 @@ Planned features:
 - Pneumnonia detection on photos
 - Pneumnonia detection on files or images
 
+
+(App will show the camera preview, just not on the emulator)
+
 ![image](https://github.com/user-attachments/assets/ba9a3c5d-0aad-4295-ab60-5cc5b1fd92fb)
