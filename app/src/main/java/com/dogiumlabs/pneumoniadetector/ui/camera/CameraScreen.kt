@@ -52,7 +52,7 @@ fun CameraScreen(
 
         Button(
             onClick = { /* Trigger photo capture */ },
-            modifier = Modifier.align(Alignment.BottomCenter).padding(16.dp)
+            modifier = Modifier.align(Alignment.BottomCenter).padding(32.dp)
         ) {
             Text("Capture Photo")
         }
