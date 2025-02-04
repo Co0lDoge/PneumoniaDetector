@@ -13,7 +13,7 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
-import com.dogiumlabs.pneumoniadetector.ui.camera.CameraScreen
+import com.dogiumlabs.pneumoniadetector.ui.camera.CameraPreviewScreen
 import com.dogiumlabs.pneumoniadetector.ui.dialog.StorageAlertDialog
 import com.dogiumlabs.pneumoniadetector.ui.theme.PneumoniaDetectorTheme
 
@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PneumoniaDetectorTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CameraScreen(
+                    CameraPreviewScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

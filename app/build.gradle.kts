@@ -59,8 +59,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.camera.view)
-    implementation(libs.androidx.camera.lifecycle)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,15 +67,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.coil.compose)
-    // CameraX core library using the camera2 implementation
-    implementation(libs.androidx.camera.core)
-    implementation(libs.androidx.camera.camera2)
-    // Camera addons
-    implementation(libs.androidx.camera.lifecycle.v150alpha04)
-    implementation(libs.androidx.camera.video)
-    implementation(libs.androidx.camera.view.v150alpha04)
-    implementation(libs.androidx.camera.mlkit.vision)
-    implementation(libs.androidx.camera.extensions)
 
     // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.compose)
