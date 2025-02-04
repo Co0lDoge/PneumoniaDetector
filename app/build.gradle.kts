@@ -68,15 +68,17 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(libs.coil.compose)
     // CameraX core library using the camera2 implementation
-    val camerax_version = "1.5.0-alpha04"
-    implementation("androidx.camera:camera-core:${camerax_version}")
-    implementation("androidx.camera:camera-camera2:${camerax_version}")
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
     // Camera addons
-    implementation("androidx.camera:camera-lifecycle:${camerax_version}")
-    implementation("androidx.camera:camera-video:${camerax_version}")
-    implementation("androidx.camera:camera-view:${camerax_version}")
-    implementation("androidx.camera:camera-mlkit-vision:${camerax_version}")
-    implementation("androidx.camera:camera-extensions:${camerax_version}")
+    implementation(libs.androidx.camera.lifecycle.v150alpha04)
+    implementation(libs.androidx.camera.video)
+    implementation(libs.androidx.camera.view.v150alpha04)
+    implementation(libs.androidx.camera.mlkit.vision)
+    implementation(libs.androidx.camera.extensions)
+
+    // ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 }
