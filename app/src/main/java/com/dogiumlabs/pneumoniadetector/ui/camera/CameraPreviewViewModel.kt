@@ -1,29 +1,36 @@
 package com.dogiumlabs.pneumoniadetector.ui.camera
 
-import android.util.Size
+import android.content.Context
+import androidx.camera.core.CameraSelector.DEFAULT_BACK_CAMERA
 import androidx.camera.core.Preview
 import androidx.camera.core.SurfaceRequest
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.lifecycle.awaitInstance
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 class CameraPreviewViewModel: ViewModel() {
-    private val _surfaceRequests = MutableStateFlow<SurfaceRequest?>(null)
+    // Used to set up a link between the Camera and your UI.
+    private val _surfaceRequest = MutableStateFlow<SurfaceRequest?>(null)
+    val surfaceRequest: StateFlow<SurfaceRequest?> = _surfaceRequest
 
-    val surfaceRequests: StateFlow<SurfaceRequest?>
-        get() = _surfaceRequests.asStateFlow()
-
-    private fun produceSurfaceRequests(previewUseCase: Preview) {
-        // Always publish new SurfaceRequests from Preview
-        previewUseCase.setSurfaceProvider { newSurfaceRequest ->
-            _surfaceRequests.value = newSurfaceRequest
+    private val cameraPreviewUseCase = Preview.Builder().build().apply {
+        setSurfaceProvider { newSurfaceRequest ->
+            _surfaceRequest.update { newSurfaceRequest }
         }
     }
 
-    fun focusOnPoint(surfaceBounds: Size, x: Float, y: Float) {
-        // Create point for CameraX's CameraControl.startFocusAndMetering() and submit...
-    }
+    suspend fun bindToCamera(appContext: Context, lifecycleOwner: LifecycleOwner) {
+        val processCameraProvider = ProcessCameraProvider.awaitInstance(appContext)
+        processCameraProvider.bindToLifecycle(
+            lifecycleOwner, DEFAULT_BACK_CAMERA, cameraPreviewUseCase
+        )
 
-    // ...
+        // Cancellation signals we're done with the camera
+        try { awaitCancellation() } finally { processCameraProvider.unbindAll() }
+    }
 }

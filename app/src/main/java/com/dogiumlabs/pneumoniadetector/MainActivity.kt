@@ -1,6 +1,6 @@
 package com.dogiumlabs.pneumoniadetector
 
-import MyCameraViewfinder
+import CameraPreviewScreen
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PneumoniaDetectorTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MyCameraViewfinder(
+                    CameraPreviewScreen(
 
                     )
                 }
