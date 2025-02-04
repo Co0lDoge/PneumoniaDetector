@@ -12,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.dogiumlabs.pneumoniadetector.ui.camera.CameraScreen
 import com.dogiumlabs.pneumoniadetector.ui.dialog.StorageAlertDialog
@@ -25,39 +24,27 @@ class MainActivity : ComponentActivity() {
         launchApp()
     }
 
-    val requestPermissionLauncher =
+    private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
                 showAppContent()
             } else {
-                showUnavailabilityDialog()
+                showRequestDialog()
             }
         }
 
-    fun launchApp() {
+    private fun launchApp() {
         when {
             ContextCompat.checkSelfPermission(
                 this,
                 android.Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED -> {
-                // You can use the API that requires the permission.
-            }
-            ActivityCompat.shouldShowRequestPermissionRationale(
-                this, android.Manifest.permission.CAMERA) -> {
-                // In an educational UI, explain to the user why your app requires this
-                // permission for a specific feature to behave as expected, and what
-                // features are disabled if it's declined. In this UI, include a
-                // "cancel" or "no thanks" button that lets the user continue
-                // using your app without granting the permission.
-                showRequestDialog()
+                showAppContent()
             }
             else -> {
-                // You can directly ask for the permission.
-                // The registered ActivityResultCallback gets the result of this request.
-                requestPermissionLauncher.launch(
-                    android.Manifest.permission.CAMERA)
+                showRequestDialog()
             }
         }
     }
@@ -76,17 +63,26 @@ class MainActivity : ComponentActivity() {
 
     private fun showRequestDialog() {
         setContent {
-            StorageAlertDialog(
-                onDismissRequest = { /*TODO*/ },
-                onConfirmation = { /*TODO*/ },
-                dialogTitle = "fwfw",
-                dialogText = "fggwggwa",
-                icon = Icons.Default.Warning
-            )
+            PneumoniaDetectorTheme {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    StorageAlertDialog(
+                        onDismissRequest = { finish() },
+                        onConfirmation = {
+                            requestPermissionLauncher.launch(
+                                android.Manifest.permission.CAMERA
+                            )
+                        },
+                        dialogTitle = "Camera permission required",
+                        dialogText = "This is a camera that requires access to camera." +
+                                " Press Confirm to grant permission" +
+                                " or Dismiss to exit the application.",
+                        confirmText = "Confirm",
+                        cancelText = "Exit App",
+                        icon = Icons.Default.Warning,
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                }
+            }
         }
-    }
-
-    private fun showUnavailabilityDialog() {
-        // TODO
     }
 }

@@ -19,6 +19,8 @@ fun StorageAlertDialog(
     onConfirmation: () -> Unit,
     dialogTitle: String,
     dialogText: String,
+    confirmText: String,
+    cancelText: String,
     icon: ImageVector,
     modifier: Modifier = Modifier
 ) {
@@ -41,7 +43,7 @@ fun StorageAlertDialog(
                     onConfirmation()
                 }
             ) {
-                Text("Confirm")
+                Text(confirmText)
             }
         },
         dismissButton = {
@@ -50,7 +52,7 @@ fun StorageAlertDialog(
                     onDismissRequest()
                 }
             ) {
-                Text("Dismiss")
+                Text(cancelText)
             }
         },
         modifier = modifier,
@@ -68,6 +70,8 @@ private fun AlertDialogPreview() {
                 dialogTitle = "Dialog Title",
                 dialogText = "Dialog read this: press confirm to confirm" +
                         ", press dismiss to dismiss.",
+                confirmText = "Confirm",
+                cancelText = "Cancel",
                 icon = Icons.Default.Warning
             )
         }
